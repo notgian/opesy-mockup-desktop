@@ -7,6 +7,18 @@ Section S03
 - MARC JARED SEAN ERCIA
 - THEON SCHUYLER GARCIA
 
+# Cloning the Repo
+
+Cloning the repo will have an extra step, because imgui was included as a submodule
+```cmd
+# clone the repo
+git clone https://github.com/notgian/opesy-mockup-desktop.git
+
+# update the imgui submodule
+cd opesy-mockup-desktop
+git submodule update --init --recursive
+```
+
 
 # Building and Running
 In compliance with the requirements to build the application from the IDE, a custom vscode build task has been included.
