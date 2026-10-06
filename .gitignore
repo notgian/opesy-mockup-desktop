@@ -23,7 +23,8 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+# we allso need this to run and build
+# *.dll
 *.so.*
 
 # Fortran module files
@@ -33,8 +34,9 @@
 # Compiled Static libraries
 *.lai
 *.la
-*.a
-*.lib
+# we kinda need this to run and build so yeah
+# *.a
+# *.lib
 
 # Executables
 *.exe
