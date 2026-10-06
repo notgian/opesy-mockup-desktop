@@ -18,4 +18,7 @@ PRE-REQUISITES:
 ## How to Build and Run
 1. From `main.cpp` click the run button from vscode.
 2. You may be prompted for what build task to use. Click the one that indicates `C++ Launch and Run preLaunchTask: cppbuild`.
+
+<img width="725" height="236" alt="image" src="https://github.com/user-attachments/assets/44e7849d-7d25-47ca-8b57-5b9161b91997" />
+
 3. The application will build and be run in the VSCode integrated terminal. If all goes well, the window will pop up and all is good.
