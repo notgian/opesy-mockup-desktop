@@ -4,6 +4,11 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "image.h"
+
+// Define fixed resolution constants
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 720;
 
 static void glfw_error_callback(int error, const char* description) {
     std::fprintf(stderr, "GLFW Error %d: %s\n", error, description);
@@ -21,8 +26,11 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-    // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "ImGui GLFW g++ Example", nullptr, nullptr);
+    // Make window non-resizable to enforce fixed resolution
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+    // Create window with fixed resolution constants
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "ImGui GLFW g++ Example", nullptr, nullptr);
     if (window == nullptr) return 1;
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
@@ -46,6 +54,11 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+    // Load background texture (uncomment when ready to use an image)
+    GLuint background_texture = 0;
+    int bg_width = 0, bg_height = 0;
+    bool image_loaded = LoadTextureFromFile("assets/wallpaper.png", &background_texture, &bg_width, &bg_height);
+
     bool show_demo_window = true;
 
     // Main loop
@@ -57,7 +70,38 @@ int main() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window
+        // -----------------------------------------------------------------
+        // Background Window (Covers the full 1280x720 screen)
+        // -----------------------------------------------------------------
+        ImGui::SetNextWindowPos(ImVec2(0, 0));
+        ImGui::SetNextWindowSize(ImVec2((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT));
+        
+        ImGuiWindowFlags bg_flags = ImGuiWindowFlags_NoDecoration | 
+                                    ImGuiWindowFlags_NoMove | 
+                                    ImGuiWindowFlags_NoSavedSettings | 
+                                    ImGuiWindowFlags_NoBringToFrontOnFocus | 
+                                    ImGuiWindowFlags_NoNavFocus;
+
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+        
+        // Push a pure black background color for this window
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+        ImGui::Begin("BackgroundWindow", nullptr, bg_flags);
+        
+        // Render an background image
+        if (image_loaded) {
+            ImGui::Image((ImTextureID)(intptr_t)background_texture, ImVec2((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT));
+        }
+
+        ImGui::End();
+
+        ImGui::PopStyleColor(); // Pop WindowBg
+        ImGui::PopStyleVar(2);  // Pop WindowRounding and WindowPadding
+
+        // -----------------------------------------------------------------
+        // Your other ImGui windows/elements go here
+        // -----------------------------------------------------------------
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
 
@@ -66,8 +110,11 @@ int main() {
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+        
+        // Clear screen to black
+        glClearColor(0.0f, 0.0f, 0.0f, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
+        
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
