@@ -6,6 +6,7 @@
 #include <iostream>
 #include "image.h"
 #include "TimeClock.h"
+#include "Taskbar.h" // Include the new Taskbar component
 
 // Define fixed resolution constants
 const int SCREEN_WIDTH = 1280;
@@ -60,7 +61,7 @@ int main() {
     int bg_width = 0, bg_height = 0;
     bool image_loaded = LoadTextureFromFile("assets/wallpaper.png", &background_texture, &bg_width, &bg_height);
 
-    bool show_demo_window = true;
+    bool show_demo_window = false; // Start with demo window hidden until an app button is clicked
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -104,6 +105,11 @@ int main() {
         // Render Top-Right Real-Time Clock Component
         // -----------------------------------------------------------------
         RenderTimeClock((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
+
+        // -----------------------------------------------------------------
+        // Render Bottom Taskbar Component
+        // -----------------------------------------------------------------
+        RenderTaskbar((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, window, &show_demo_window);
 
         // -----------------------------------------------------------------
         // Your other ImGui windows/elements go here
