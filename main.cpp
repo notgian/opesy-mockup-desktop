@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "image.h"
+#include "TimeClock.h"
 
 // Define fixed resolution constants
 const int SCREEN_WIDTH = 1280;
@@ -54,7 +55,7 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
-    // Load background texture (uncomment when ready to use an image)
+    // Load background texture
     GLuint background_texture = 0;
     int bg_width = 0, bg_height = 0;
     bool image_loaded = LoadTextureFromFile("assets/wallpaper.png", &background_texture, &bg_width, &bg_height);
@@ -89,7 +90,7 @@ int main() {
         ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
         ImGui::Begin("BackgroundWindow", nullptr, bg_flags);
         
-        // Render an background image
+        // Render background image if loaded, otherwise falls back to solid black
         if (image_loaded) {
             ImGui::Image((ImTextureID)(intptr_t)background_texture, ImVec2((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT));
         }
@@ -98,6 +99,11 @@ int main() {
 
         ImGui::PopStyleColor(); // Pop WindowBg
         ImGui::PopStyleVar(2);  // Pop WindowRounding and WindowPadding
+
+        // -----------------------------------------------------------------
+        // Render Top-Right Real-Time Clock Component
+        // -----------------------------------------------------------------
+        RenderTimeClock((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
 
         // -----------------------------------------------------------------
         // Your other ImGui windows/elements go here
