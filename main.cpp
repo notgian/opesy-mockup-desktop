@@ -6,7 +6,8 @@
 #include <iostream>
 #include "image.h"
 #include "TimeClock.h"
-#include "Taskbar.h" // Include the new Taskbar component
+#include "Taskbar.h"
+#include "Gallery.h"
 
 // Define fixed resolution constants
 const int SCREEN_WIDTH = 1280;
@@ -61,7 +62,10 @@ int main() {
     int bg_width = 0, bg_height = 0;
     bool image_loaded = LoadTextureFromFile("assets/wallpaper.png", &background_texture, &bg_width, &bg_height);
 
-    bool show_demo_window = false; // Start with demo window hidden until an app button is clicked
+    bool show_demo_window = false; 
+
+    bool show_gallery_window = false;
+    Gallery galleryApp;
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -109,13 +113,14 @@ int main() {
         // -----------------------------------------------------------------
         // Render Bottom Taskbar Component
         // -----------------------------------------------------------------
-        RenderTaskbar((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, window, &show_demo_window);
+        RenderTaskbar((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, window, &show_demo_window, &show_gallery_window);
 
         // -----------------------------------------------------------------
         // Your other ImGui windows/elements go here
         // -----------------------------------------------------------------
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
+        galleryApp.Render(&show_gallery_window, (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
 
         // Rendering
         ImGui::Render();

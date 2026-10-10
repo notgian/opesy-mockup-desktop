@@ -1,7 +1,7 @@
 #include "Taskbar.h"
 #include "imgui.h"
 
-void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, bool* show_demo_window) {
+void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, bool* show_demo_window, bool* show_gallery_window) {
     float taskbar_height = 45.0f;
     ImGui::SetNextWindowPos(ImVec2(0, screen_height - taskbar_height), ImGuiCond_Always);
     ImGui::SetNextWindowSize(ImVec2(screen_width, taskbar_height), ImGuiCond_Always);
@@ -29,8 +29,10 @@ void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, 
     ImGui::SameLine();
 
     // App 1 Button
-    if (ImGui::Button("App 1", ImVec2(70.0f, 30.0f))) {
-        *show_demo_window = true;
+    if (ImGui::Button("Gallery", ImVec2(70.0f, 30.0f))) {
+        if (show_gallery_window) {
+            *show_gallery_window = !(*show_gallery_window);
+        }
     }
 
     ImGui::SameLine();
