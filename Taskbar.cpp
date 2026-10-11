@@ -1,7 +1,8 @@
 #include "Taskbar.h"
 #include "imgui.h"
 
-void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, bool* show_demo_window) {
+void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, bool* show_demo_window,
+                   bool* show_task_manager, bool* show_notepad) {
     float taskbar_height = 45.0f;
     ImGui::SetNextWindowPos(ImVec2(0, screen_height - taskbar_height), ImGuiCond_Always);
     ImGui::SetNextWindowSize(ImVec2(screen_width, taskbar_height), ImGuiCond_Always);
@@ -28,16 +29,22 @@ void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, 
     ImGui::Spacing();
     ImGui::SameLine();
 
-    // App 1 Button
-    if (ImGui::Button("App 1", ImVec2(70.0f, 30.0f))) {
-        *show_demo_window = true;
+    // App 1 Button -> Task Manager
+    if (ImGui::Button("TASK", ImVec2(70.0f, 30.0f))) {
+        if (show_task_manager) {
+            *show_task_manager = true;
+            ImGui::SetWindowFocus("Task Manager"); // bring to front if already open
+        }
     }
 
     ImGui::SameLine();
 
-    // App 2 Button
-    if (ImGui::Button("App 2", ImVec2(70.0f, 30.0f))) {
-        *show_demo_window = true;
+    // App 2 Button -> Notepad (unique app)
+    if (ImGui::Button("NOTE", ImVec2(70.0f, 30.0f))) {
+        if (show_notepad) {
+            *show_notepad = true;
+            ImGui::SetWindowFocus("Untitled - Notepad###Notepad");
+        }
     }
 
     ImGui::SameLine();

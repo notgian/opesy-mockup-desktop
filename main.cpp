@@ -7,6 +7,8 @@
 #include "image.h"
 #include "TimeClock.h"
 #include "Taskbar.h" // Include the new Taskbar component
+#include "TaskManager.h"
+#include "Notepad.h"
 
 // Define fixed resolution constants
 const int SCREEN_WIDTH = 1280;
@@ -62,6 +64,8 @@ int main() {
     bool image_loaded = LoadTextureFromFile("assets/wallpaper.png", &background_texture, &bg_width, &bg_height);
 
     bool show_demo_window = false; // Start with demo window hidden until an app button is clicked
+    bool show_task_manager = false;
+    bool show_notepad = false;
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -109,13 +113,17 @@ int main() {
         // -----------------------------------------------------------------
         // Render Bottom Taskbar Component
         // -----------------------------------------------------------------
-        RenderTaskbar((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, window, &show_demo_window);
+        RenderTaskbar((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, window, &show_demo_window,
+                      &show_task_manager, &show_notepad);
 
         // -----------------------------------------------------------------
         // Your other ImGui windows/elements go here
         // -----------------------------------------------------------------
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
+
+        RenderTaskManager(&show_task_manager);
+        RenderNotepad(&show_notepad);
 
         // Rendering
         ImGui::Render();
