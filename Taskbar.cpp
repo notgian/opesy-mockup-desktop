@@ -29,17 +29,8 @@ void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, 
     ImGui::Spacing();
     ImGui::SameLine();
 
-    // App 1 Button -> Task Manager
-    if (ImGui::Button("TASK", ImVec2(70.0f, 30.0f))) {
-        if (show_task_manager) {
-            *show_task_manager = true;
-            ImGui::SetWindowFocus("Task Manager"); // bring to front if already open
-        }
-    }
 
-    ImGui::SameLine();
-
-    // App 2 Button -> Notepad (unique app)
+    // App 1 Button -> Notepad (unique app)
     if (ImGui::Button("NOTE", ImVec2(70.0f, 30.0f))) {
         if (show_notepad) {
             *show_notepad = true;
@@ -49,11 +40,21 @@ void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, 
 
     ImGui::SameLine();
 
-    // App 3 Button
+    // App 2 Button
     if (ImGui::Button("GALLERY", ImVec2(70.0f, 30.0f))) {
         if (show_gallery_window) {
             *show_gallery_window = true;
             ImGui::SetWindowFocus("Gallery App");
+        }
+    }
+
+    // App 3 Button -> Task Manager
+    ImGui::SameLine();
+
+    if (ImGui::Button("TASK", ImVec2(70.0f, 30.0f))) {
+        if (show_task_manager) {
+            *show_task_manager = true;
+            ImGui::SetWindowFocus("Task Manager"); // bring to front if already open
         }
     }
 
