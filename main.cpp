@@ -8,6 +8,8 @@
 #include "TimeClock.h"
 #include "Taskbar.h"
 #include "Gallery.h"
+#include "TaskManager.h"
+#include "Notepad.h"
 
 // Define fixed resolution constants
 const int SCREEN_WIDTH = 1280;
@@ -66,6 +68,8 @@ int main() {
 
     bool show_gallery_window = false;
     Gallery galleryApp;
+    bool show_task_manager = false;
+    bool show_notepad = false;
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -113,7 +117,8 @@ int main() {
         // -----------------------------------------------------------------
         // Render Bottom Taskbar Component
         // -----------------------------------------------------------------
-        RenderTaskbar((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, window, &show_demo_window, &show_gallery_window);
+        RenderTaskbar((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, window, &show_demo_window, &show_gallery_window,
+                      &show_task_manager, &show_notepad);
 
         // -----------------------------------------------------------------
         // Your other ImGui windows/elements go here
@@ -121,6 +126,9 @@ int main() {
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
         galleryApp.Render(&show_gallery_window, (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
+
+        RenderTaskManager(&show_task_manager);
+        RenderNotepad(&show_notepad);
 
         // Rendering
         ImGui::Render();
