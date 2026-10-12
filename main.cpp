@@ -29,7 +29,7 @@ void printBootScreen() {
     cout 
     << "CSOPESY Mockup Desktop" << endl
     << "Released 10/12/2026" << endl
-    << "Totally Real Company Name ©" << endl << endl;
+    << "Totally Real Company Name (c)" << endl << endl;
 
     cout << "Memory Test:" << endl;
     Sleep(500);
