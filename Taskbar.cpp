@@ -52,7 +52,8 @@ void RenderTaskbar(float screen_width, float screen_height, GLFWwindow* window, 
     // App 3 Button
     if (ImGui::Button("GALLERY", ImVec2(70.0f, 30.0f))) {
         if (show_gallery_window) {
-            *show_gallery_window = !(*show_gallery_window);
+            *show_gallery_window = true;
+            ImGui::SetWindowFocus("Gallery App");
         }
     }
 

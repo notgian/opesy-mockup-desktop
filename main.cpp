@@ -4,12 +4,17 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <windows.h>
 #include "image.h"
 #include "TimeClock.h"
 #include "Taskbar.h"
 #include "Gallery.h"
 #include "TaskManager.h"
 #include "Notepad.h"
+
+
+using std::cout;
+using std::endl;
 
 // Define fixed resolution constants
 const int SCREEN_WIDTH = 1280;
@@ -19,9 +24,47 @@ static void glfw_error_callback(int error, const char* description) {
     std::fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
+void printBootScreen() {
+    system("cls");
+    cout 
+    << "CSOPESY Mockup Desktop" << endl
+    << "Released 10/12/2026" << endl
+    << "Totally Real Company Name ©" << endl << endl;
+
+    cout << "Memory Test:" << endl;
+    Sleep(500);
+    cout << "Checking Ram: 64000k OK" << endl;
+
+    cout << endl << endl
+    << "CPU Version: Whyzen 67" << endl
+    << "Bios Version: WTH ISTS 200420" << endl
+    << "Beginning Boot Sequence...";
+    Sleep(1500);
+
+    system("cls");
+
+    std::cout << "   ____  ____  _____________  ____  _____  ____    ___  __________  ____ \n"
+          << "  / __ \\/ __ \\/ ____/ ___/\\ \\/ /  |/  / / / / /   /   |/_  __/ __ \\/ __ \\\n"
+          << " / / / / /_/ / __/  \\__ \\  \\  / /|_/ / / / / /   / /| | / / / / / / /_/ /\n"
+          << "/ /_/ / ____/ /___ ___/ /  / / /  / / /_/ / /___/ ___ |/ / / /_/ / _, _/ \n"
+          << "\\____/_/   /_____//____/  /_/_/  /_/\\____/_____/_/  |_/_/  \\____/_/ |_|  \n";
+
+    std::cout << "CSOPESY Operating System Emulator\n";
+
+    const char* loading_states[] = { "Loading.", "Loading..", "Loading..." };
+    for (int i = 0; i < 12; ++i) {
+        std::cout << "\r                                           \r" << loading_states[i % 3];
+        Sleep(400);
+    }
+    
+    std::cout << std::endl;
+    Sleep(500);
+
+    system("cls");
+}
+
 int main() {
-    std::cout << "Hello World!" << std::endl;
-    std::cout << "Let's pretend that this is the bios boot!!" << std::endl;
+    printBootScreen();
 
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit()) return 1;
